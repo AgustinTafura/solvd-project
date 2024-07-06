@@ -361,7 +361,7 @@ npm install
 \`\`\`
 
 ## Run
-\`\`\`bash
+```bash
 docker-compose up
 npm start
-\`\`\`
+```
