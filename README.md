@@ -14,6 +14,10 @@ http://localhost:3000
 
 ## API Documentation
 
+### ERD
+![Project Entity–relationship model](https://github.com/AgustinTafura/solvd-project/blob/main/hospital-appointment-scheduler.jpg)
+
+
 ### 1. Endpoint `api/v1/login`
 **Endpoint:** `api/v1/login`  
 **Standard:** JWT  
