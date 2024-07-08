@@ -652,6 +652,121 @@ curl -X 'POST' \
     ```
 
 
+### 8. Endpoint `api/v1/availability`
+- **POST `api/v1/availability`** - Create an availability record
+  Server responds with status code 201 and the created availability record.
+  
+  **Request:**
+  ```bash
+  curl -X 'POST' \
+  'api/v1/availability' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "doctor_id": 1,
+    "day_of_week": 1,
+    "start_time": "09:00:00",
+    "end_time": "17:00:00"
+  }'
+  ```
+
+  **Response body:**
+  ```json
+  {
+    "id": 1,
+    "doctor_id": 1,
+    "day_of_week": 1,
+    "start_time": "09:00:00",
+    "end_time": "17:00:00"
+  }
+  ```
+
+- **GET `api/v1/availability`** - Get all availability records
+  Server responds with status code 200 and all availability records.
+
+  **Request:**
+  ```bash
+  curl -X 'GET' 'api/v1/availability'
+  ```
+
+  **Response body:**
+  ```json
+  [
+    {
+        "id": 1,
+        "doctor_id": 1,
+        "day_of_week": 1,
+        "start_time": "09:00:00",
+        "end_time": "17:00:00"
+    },
+    {
+        "id": 2,
+        "doctor_id": 2,
+        "day_of_week": 3,
+        "start_time": "10:00:00",
+        "end_time": "18:00:00"
+    }
+  ]
+  ```
+
+- **GET `api/v1/availability/{availability_id}`** - Get an availability record by ID  
+    Server responds with status code 200 and the availability record if it exists.
+    
+    **Request:**
+    ```bash
+    curl -X 'GET' 'api/v1/availability/1'
+    ```
+
+    **Response body:**
+    ```json
+    {
+        "id": 1,
+        "doctor_id": 1,
+        "day_of_week": 1,
+        "start_time": "09:00:00",
+        "end_time": "17:00:00"
+    }
+    ```
+
+- **PUT  `api/v1/availability/{availability_id}`** - Update an availability by ID  
+    Server responds with status code 200 and the updated availability record.
+    
+    **Request:**
+    ```bash
+    curl -X 'PUT' \
+    'api/v1/availability/1' \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "doctor_id": 1,
+        "day_of_week": 2,
+        "start_time": "08:00:00",
+        "end_time": "16:00:00"
+    }'
+    ```
+
+    **Response body:**
+    ```json
+    {
+        "id": 1,
+        "doctor_id": 1,
+        "day_of_week": 2,
+        "start_time": "08:00:00",
+        "end_time": "16:00:00"
+    }
+    ```
+
+- **DELETE  `api/v1/availability/{availability_id}`** - Delete an availability record by ID  
+    Server responds with status code 204 if the availability is successfully deleted.
+    
+    **Request:**
+    ```bash
+    curl -X 'DELETE' 'api/v1/availability/1'
+    ```
+
+    **Response body:**
+    ```
+    No Content
+    ```
+
 ## Install
 ```bash
 git clone <repository-url>
