@@ -3,19 +3,43 @@ version: '3.8'
 services:
   app:
     container_name: hospital_appointment_app
-    build: .
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     env_file: .env
+    environment:
+      DB_HOST: ${DB_HOST_DOCKER}
     depends_on:
       - db
 
   db:
     container_name: hospital_appointment_db
     image: postgres:16.1
+    restart: always
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - ./hospital_appointment_schema.sql:/docker-entrypoint-initdb.d/hospital_appointment_schema.sql
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    volumes:
+      - ./pgadmin_config.json:/pgadmin4/servers.json
+      - ./pgpass:/tmp/pgpass_file
+    entrypoint: ["/bin/sh", "-c", "echo '*:*:*:${DB_USER}:${DB_PASSWORD}' > /tmp/pgpass_file && chmod 600 /tmp/pgpass_file && /entrypoint.sh"]
