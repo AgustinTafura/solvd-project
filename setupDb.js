@@ -10,7 +10,7 @@ const { Pool } = pkg;
 const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
-    database: "postgres",
+    database: 'postgres',
     password: process.env.DB_PASSWORD,
     port: process.env.DB_PORT || 5432,
 });
@@ -29,9 +29,7 @@ const createDatabaseAndSchema = async () => {
             await client.query(`CREATE DATABASE ${dbName}`);
             console.log(`Database ${dbName} created successfully.`);
         } else {
-            const msgErr = `Database ${dbName} already exists.`
-            console.log(msgErr);
-            throw Error(msgErr)
+            console.log(`Database ${dbName} already exists.`);
         }
 
         client.release();
@@ -46,15 +44,34 @@ const createDatabaseAndSchema = async () => {
 
         const dbClient = await dbPool.connect();
 
-        await dbClient.query(schemaSQL);
-        console.log('Database schema applied successfully.');
+        const createTableIfNotExists = async (query) => {
+            const tableName = query.match(/CREATE TABLE (\w+)/)[1];
+            const tableCheckResult = await dbClient.query(`
+                SELECT 1 FROM information_schema.tables 
+                WHERE table_schema = 'public' AND table_name = $1
+            `, [tableName]);
+
+            if (tableCheckResult.rowCount === 0) {
+                await dbClient.query(query);
+                console.log(`Table ${tableName} created successfully.`);
+            } else {
+                console.log(`Table ${tableName} already exists.`);
+            }
+        };
+
+        const schemaStatements = schemaSQL.split(/;\s*$/m);
+        for (const statement of schemaStatements) {
+            if (statement.trim()) {
+                await createTableIfNotExists(statement);
+            }
+        }
 
         dbClient.release();
     } catch (err) {
         console.error('Error setting up the database:', err.stack);
     } finally {
         pool.end();
-        process.exit()
+        process.exit();
     }
 };
 
