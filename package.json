@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "migrate": "node setupDb.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -17,5 +17,8 @@
     "express": "^4.19.2",
     "pg": "^8.12.0"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
 }
