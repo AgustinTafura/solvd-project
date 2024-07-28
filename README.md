@@ -28,7 +28,7 @@ curl -X 'POST' \
 '/login' \
 -H 'Content-Type: application/json' \
 -d '{
-  "username": "username",
+  "email": "email",
   "password": "password"
 }'
 ```
