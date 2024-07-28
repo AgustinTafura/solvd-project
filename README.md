@@ -28,8 +28,8 @@ curl -X 'POST' \
 '/login' \
 -H 'Content-Type: application/json' \
 -d '{
-  "email": "email",
-  "password": "password"
+    "email": "email",
+    "password": "password"
 }'
 ```
 
