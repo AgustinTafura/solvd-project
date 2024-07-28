@@ -25,6 +25,7 @@ http://localhost:3000
 **Request:**
 ```bash
 curl -X 'POST' \
+-H 'Authorization: Bearer <your-token>'
 '/login' \
 -H 'Content-Type: application/json' \
 -d '{
@@ -47,6 +48,7 @@ curl -X 'POST' \
   **Request:**
   ```bash
   curl -X 'GET' 'api/v1/patients'
+  -H 'Authorization: Bearer <your-token>'
   ```
 
   **Response body:**
@@ -73,6 +75,7 @@ curl -X 'POST' \
   **Request:**
   ```bash
   curl -X 'GET' 'api/v1/patients/1'
+  -H 'Authorization: Bearer <your-token>'
   ```
 
   **Response body:**
@@ -91,6 +94,7 @@ curl -X 'POST' \
     **Request:**
       ```bash
     curl -X 'POST' \
+    -H 'Authorization: Bearer <your-token>'
     'api/v1/patients' \
     -H 'Content-Type: application/json' \
     -d '{
@@ -116,6 +120,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
     curl -X 'PUT' \
+    -H 'Authorization: Bearer <your-token>'
     'api/v1/patients/1' \
     -H 'Content-Type: application/json' \
     -d '{
@@ -141,6 +146,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
     curl -X 'DELETE' 'api/v1/patients/1'
+    -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -155,6 +161,7 @@ curl -X 'POST' \
   **Request:**
   ```bash
   curl -X 'GET' 'api/v1/doctors'
+  -H 'Authorization: Bearer <your-token>'
   ```
 
   **Response body:**
@@ -179,6 +186,7 @@ curl -X 'POST' \
   **Request:**
   ```bash
   curl -X 'GET' 'api/v1/doctors/1'
+  -H 'Authorization: Bearer <your-token>'
   ```
 
   **Response body:**
@@ -196,6 +204,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
     curl -X 'POST' \
+    -H 'Authorization: Bearer <your-token>'
     'api/v1/doctors' \
     -H 'Content-Type: application/json' \
     -d '{
@@ -219,6 +228,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
     curl -X 'PUT' \
+    -H 'Authorization: Bearer <your-token>'
     'api/v1/doctors/1' \
     -H 'Content-Type: application/json' \
     -d '{
@@ -242,6 +252,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
     curl -X 'DELETE' 'api/v1/doctors/1'
+    -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -256,6 +267,7 @@ curl -X 'POST' \
   **Request:**
   ```bash
   curl -X 'POST' \
+  -H 'Authorization: Bearer <your-token>'
   'api/v1/appointments' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -284,6 +296,7 @@ curl -X 'POST' \
   **Request:**
   ```bash
   curl -X 'GET' 'api/v1/appointments'
+  -H 'Authorization: Bearer <your-token>'
   ```
 
   **Response body:**
@@ -312,6 +325,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
     curl -X 'GET' 'api/v1/appointments/1'
+    -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -331,6 +345,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
     curl -X 'PUT' \
+    -H 'Authorization: Bearer <your-token>'
     'api/v1/appointments/1' \
     -H 'Content-Type: application/json' \
     -d '{
@@ -358,6 +373,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
     curl -X 'DELETE' 'api/v1/appointments/1'
+    -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -372,6 +388,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'POST' \
+        -H 'Authorization: Bearer <your-token>'
         'api/v1/specializations' \
         -H 'Content-Type: application/json' \
         -d '{
@@ -393,6 +410,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'GET' 'api/v1/specializations'
+        -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -415,6 +433,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'GET' 'api/v1/specializations/1'
+        -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -431,6 +450,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'PUT' \
+        -H 'Authorization: Bearer <your-token>'
         'api/v1/specializations/1' \
         -H 'Content-Type: application/json' \
         -d '{
@@ -452,6 +472,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'DELETE' 'api/v1/specializations/1'
+        -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -466,6 +487,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'POST' \
+        -H 'Authorization: Bearer <your-token>'
         'api/v1/symptoms' \
         -H 'Content-Type: application/json' \
         -d '{
@@ -487,6 +509,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'GET' 'api/v1/symptoms'
+        -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -509,6 +532,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'GET' 'api/v1/symptoms/1'
+        -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -525,6 +549,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'PUT' \
+        -H 'Authorization: Bearer <your-token>'
         'api/v1/symptoms/1' \
         -H 'Content-Type: application/json' \
         -d '{
@@ -546,6 +571,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'DELETE' 'api/v1/symptoms/1'
+        -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -561,6 +587,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'POST' \
+        -H 'Authorization: Bearer <your-token>'
         'api/v1/specialization_symptoms' \
         -H 'Content-Type: application/json' \
         -d '{
@@ -584,6 +611,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'GET' 'api/v1/specialization_symptoms'
+        -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -608,6 +636,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'GET' 'api/v1/specialization_symptoms/1'
+        -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -625,6 +654,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'PUT' \
+        -H 'Authorization: Bearer <your-token>'
         'api/v1/specialization_symptoms/1' \
         -H 'Content-Type: application/json' \
         -d '{
@@ -648,6 +678,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
         curl -X 'DELETE' 'api/v1/specialization_symptoms/1'
+        -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -663,6 +694,7 @@ curl -X 'POST' \
   **Request:**
   ```bash
   curl -X 'POST' \
+  -H 'Authorization: Bearer <your-token>'
   'api/v1/availability' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -690,6 +722,7 @@ curl -X 'POST' \
   **Request:**
   ```bash
   curl -X 'GET' 'api/v1/availability'
+  -H 'Authorization: Bearer <your-token>'
   ```
 
   **Response body:**
@@ -718,6 +751,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
     curl -X 'GET' 'api/v1/availability/1'
+    -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
@@ -737,6 +771,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
     curl -X 'PUT' \
+    -H 'Authorization: Bearer <your-token>'
     'api/v1/availability/1' \
     -H 'Content-Type: application/json' \
     -d '{
@@ -764,6 +799,7 @@ curl -X 'POST' \
     **Request:**
     ```bash
     curl -X 'DELETE' 'api/v1/availability/1'
+    -H 'Authorization: Bearer <your-token>'
     ```
 
     **Response body:**
