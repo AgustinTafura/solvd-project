@@ -25,7 +25,6 @@ http://localhost:3000
 **Request:**
 ```bash
 curl -X 'POST' \
--H 'Authorization: Bearer <your-token>'
 '/login' \
 -H 'Content-Type: application/json' \
 -d '{
