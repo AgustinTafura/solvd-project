@@ -20,7 +20,37 @@ http://localhost:3000
 
 ![Project Entity–relationship model](https://github.com/AgustinTafura/solvd-project/blob/main/hospital-appointment-scheduler.jpg)
 
-### 1. Endpoint `api/v1/login`
+### 1. Endpoint `api/v1/register`
+
+**Endpoint:** `api/v1/register`  
+**Standard:** JWT
+
+**Request:**
+
+```bash
+curl -X 'POST' \
+'/login' \
+-H 'Content-Type: application/json' \
+-d '{
+    "email": "john@example.com",
+    "name": "John Doe",
+    "password": "password"
+}'
+```
+
+**Response body:**
+
+```json
+    {
+    	"id": 1,
+    	"name": "John Doe",
+    	"email": "john@example.com",
+    	"password": "password"
+    }
+```
+
+
+### 2. Endpoint `api/v1/login`
 
 **Endpoint:** `api/v1/login`  
 **Standard:** JWT
@@ -45,7 +75,7 @@ curl -X 'POST' \
 }
 ```
 
-### 2. Endpoint `api/v1/patients`
+### 3. Endpoint `api/v1/patients`
 
 -   **GET `api/v1/patients`** - Get all patients  
     Server responds with status code 200 and all patient records.
@@ -170,7 +200,7 @@ curl -X 'POST' \
     No Content
     ```
 
-### 3. Endpoint `api/v1/doctors`
+### 4. Endpoint `api/v1/doctors`
 
 -   **GET `api/v1/doctors`** - Get all doctors  
     Server responds with status code 200 and all doctor records.
@@ -287,7 +317,7 @@ curl -X 'POST' \
     No Content
     ```
 
-### 4. Endpoint `api/v1/appointments`
+### 5. Endpoint `api/v1/appointments`
 
 -   **POST `api/v1/appointments`** - Create an appointment  
     Server responds with status code 201 and the created appointment record.
@@ -419,7 +449,7 @@ curl -X 'POST' \
     No Content
     ```
 
-### 5. Endpoint `api/v1/specializations`
+### 6. Endpoint `api/v1/specializations`
 
 -   **POST `api/v1/specializations`** - Create a specialization
     Server responds with status code 201 and the created specialization record.
@@ -529,7 +559,7 @@ curl -X 'POST' \
     No Content
     ```
 
-### 6. Endpoint `api/v1/symptoms`
+### 7. Endpoint `api/v1/symptoms`
 
 -   **POST `api/v1/symptoms`** - Create a symptom
     Server responds with status code 201 and the created symptom record.
@@ -639,7 +669,7 @@ curl -X 'POST' \
     No Content
     ```
 
-### 7. Endpoint `api/v1/specialization_symptoms`
+### 8. Endpoint `api/v1/specialization_symptoms`
 
 -   **POST `api/v1/specialization_symptoms`** - Create a specialization_symptom associations
     Server responds with status code 201 and the created specialization_symptom record.
@@ -756,7 +786,7 @@ curl -X 'POST' \
     No Content
     ```
 
-### 8. Endpoint `api/v1/availability`
+### 9. Endpoint `api/v1/availability`
 
 -   **POST `api/v1/availability`** - Create an availability record
     Server responds with status code 201 and the created availability record.
