@@ -8,6 +8,6 @@ const router = express.Router();
 /* Routes */
 router.get('/', (req, res) => res.json('App running'));
 router.use('/api/v1', authRoutes);
-router.use('/api/v1',authenticateToken, patientRoutes);
+router.use('/api/v1', authenticateToken, patientRoutes);
 
 export default router;

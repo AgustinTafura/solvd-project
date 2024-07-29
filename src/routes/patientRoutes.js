@@ -1,10 +1,10 @@
 import express from 'express';
 import {
-    getAllPatientsHandler,
-    getPatientByIdHandler,
-    createPatientHandler,
-    updatePatientHandler,
-    deletePatientHandler
+	getAllPatientsHandler,
+	getPatientByIdHandler,
+	createPatientHandler,
+	updatePatientHandler,
+	deletePatientHandler,
 } from '../controllers/patientController.js';
 
 const router = express.Router();

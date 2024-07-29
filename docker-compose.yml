@@ -1,21 +1,21 @@
 version: '3.8'
 
 services:
-  app:
-    container_name: hospital_appointment_app
-    build: .
-    ports:
-      - "3000:3000"
-    env_file: .env
-    depends_on:
-      - db
+    app:
+        container_name: hospital_appointment_app
+        build: .
+        ports:
+            - '3000:3000'
+        env_file: .env
+        depends_on:
+            - db
 
-  db:
-    container_name: hospital_appointment_db
-    image: postgres:16.1
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
-    ports:
-      - "5432:5432"
+    db:
+        container_name: hospital_appointment_db
+        image: postgres:16.1
+        environment:
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_NAME}
+        ports:
+            - '5432:5432'
