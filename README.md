@@ -41,14 +41,13 @@ curl -X 'POST' \
 **Response body:**
 
 ```json
-    {
-    	"id": 1,
-    	"name": "John Doe",
-    	"email": "john@example.com",
-    	"password": "password"
-    }
+{
+	"id": 1,
+	"name": "John Doe",
+	"email": "john@example.com",
+	"password": "password"
+}
 ```
-
 
 ### 2. Endpoint `api/v1/login`
 

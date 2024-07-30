@@ -1,19 +1,9 @@
-import pkg from 'pg';
+import { pool } from './src/db.js';
 import fs from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
-const { Pool } = pkg;
-
-const pool = new Pool({
-	user: process.env.DB_USER,
-	host: process.env.DB_HOST,
-	database: 'postgres',
-	password: process.env.DB_PASSWORD,
-	port: process.env.DB_PORT || 5432,
-});
 
 const dbName = process.env.DB_NAME;
 const schemaPath = path.join(process.cwd(), 'hospital_appointment_schema.sql');
