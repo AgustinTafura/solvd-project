@@ -9,13 +9,10 @@ import {
 
 const router = express.Router();
 
-router.get('/specialization_symptoms', handleGetAllSpecializationSymptoms);
-router.get('/specialization_symptoms/:id', handleGetSpecializationSymptomById);
-router.post('/specialization_symptoms', handleCreateSpecializationSymptom);
-router.put('/specialization_symptoms/:id', handleUpdateSpecializationSymptom);
-router.delete(
-	'/specialization_symptoms/:id',
-	handleDeleteSpecializationSymptom,
-);
+router.get('/', handleGetAllSpecializationSymptoms);
+router.get('/:id', handleGetSpecializationSymptomById);
+router.post('/', handleCreateSpecializationSymptom);
+router.put('/:id', handleUpdateSpecializationSymptom);
+router.delete('/:id', handleDeleteSpecializationSymptom);
 
 export default router;

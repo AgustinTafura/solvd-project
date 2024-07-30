@@ -9,10 +9,10 @@ import {
 
 const router = express.Router();
 
-router.get('/symptoms', handleGetAllSymptoms);
-router.get('/symptoms/:id', handleGetSymptomById);
-router.post('/symptoms', handleCreateSymptom);
-router.put('/symptoms/:id', handleUpdateSymptom);
-router.delete('/symptoms/:id', handleDeleteSymptom);
+router.get('/', handleGetAllSymptoms);
+router.get('/:id', handleGetSymptomById);
+router.post('/', handleCreateSymptom);
+router.put('/:id', handleUpdateSymptom);
+router.delete('/:id', handleDeleteSymptom);
 
 export default router;

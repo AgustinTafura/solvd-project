@@ -9,10 +9,10 @@ import {
 
 const router = express.Router();
 
-router.get('/specializations', handleGetAllSpecializations);
-router.get('/specializations/:id', handleGetSpecializationById);
-router.post('/specializations', handleCreateSpecialization);
-router.put('/specializations/:id', handleUpdateSpecialization);
-router.delete('/specializations/:id', handleDeleteSpecialization);
+router.get('/', handleGetAllSpecializations);
+router.get('/:id', handleGetSpecializationById);
+router.post('/', handleCreateSpecialization);
+router.put('/:id', handleUpdateSpecialization);
+router.delete('/:id', handleDeleteSpecialization);
 
 export default router;
