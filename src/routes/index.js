@@ -2,6 +2,7 @@ import express from 'express';
 import authRoutes from './authRoutes.js';
 import patientRoutes from './patientRoutes.js';
 import doctorRoutes from './doctorRoutes.js';
+import specializationRoutes from './specializationRoutes.js';
 
 import { authenticateToken } from '../middleware/authMiddleware.js';
 
@@ -12,5 +13,6 @@ router.get('/', (req, res) => res.json('App running'));
 router.use('/api/v1', authRoutes);
 router.use('/api/v1', authenticateToken, patientRoutes);
 router.use('/api/v1', authenticateToken, doctorRoutes);
+router.use('/api/v1', authenticateToken, specializationRoutes);
 
 export default router;
