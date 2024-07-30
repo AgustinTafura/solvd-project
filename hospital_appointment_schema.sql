@@ -50,7 +50,7 @@ CREATE TABLE specialization_symptoms (
 CREATE TABLE availability (
     id SERIAL PRIMARY KEY,
     doctor_id INT NOT NULL,
-    day_of_week INT NOT NULL,
+    day_of_week INT NOT NULL CHECK (day_of_week BETWEEN 0 AND 6),
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
     FOREIGN KEY (doctor_id) REFERENCES doctors(id)
