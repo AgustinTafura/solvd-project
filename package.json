@@ -6,6 +6,7 @@
 	"scripts": {
 		"start": "node src/index.js",
 		"migrate": "node setupDb.js",
+		"seed": "node seedDb.js",
 		"dev": "concurrently \"npm run lint\" \"npm run format\" \"nodemon src/index.js\"",
 		"lint": "eslint . --ext .js,.jsx,.ts,.tsx",
 		"lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
