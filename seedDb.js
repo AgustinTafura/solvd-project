@@ -120,6 +120,47 @@ const doctors = [
 	{ name: 'Dr. Rodriguez', specialization_id: 10 },
 ];
 
+const patients = [
+	{ name: 'John Doe', email: 'john.doe@example.com', phone: '555-1234' },
+	{ name: 'Jane Smith', email: 'jane.smith@example.com', phone: '555-5678' },
+	{
+		name: 'Alice Johnson',
+		email: 'alice.johnson@example.com',
+		phone: '555-8765',
+	},
+	{ name: 'Bob Brown', email: 'bob.brown@example.com', phone: '555-4321' },
+	{
+		name: 'Charlie Davis',
+		email: 'charlie.davis@example.com',
+		phone: '555-6789',
+	},
+	{
+		name: 'Diana Evans',
+		email: 'diana.evans@example.com',
+		phone: '555-9876',
+	},
+	{
+		name: 'Edward Foster',
+		email: 'edward.foster@example.com',
+		phone: '555-3456',
+	},
+	{
+		name: 'Fiona Green',
+		email: 'fiona.green@example.com',
+		phone: '555-6543',
+	},
+	{
+		name: 'George Harris',
+		email: 'george.harris@example.com',
+		phone: '555-7890',
+	},
+	{
+		name: 'Hannah Clark',
+		email: 'hannah.clark@example.com',
+		phone: '555-8901',
+	},
+];
+
 async function seedSpecializations() {
 	for (const specialization of specializations) {
 		await pool.query(
@@ -192,11 +233,23 @@ async function seedDoctors() {
 	console.log('Doctors seeded');
 }
 
+async function seedPatients() {
+	for (const patient of patients) {
+		const { name, email, phone } = patient;
+		await pool.query(
+			'INSERT INTO patients (name, email, phone) VALUES ($1, $2, $3)',
+			[name, email, phone],
+		);
+	}
+	console.log('Patients seeded');
+}
+
 async function seedDatabase() {
 	try {
 		await seedSpecializations();
 		await seedSymptoms();
 		await seedSpecializationSymptoms();
+		await seedPatients();
 		await seedDoctors();
 		await seedAvailability();
 		console.log('Database seeded successfully');
