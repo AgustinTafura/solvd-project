@@ -1,6 +1,6 @@
 # Hospital Appointment Scheduler
 
-## Project Description
+##  Project Description
 
 This project is a hospital appointment scheduling system. Patients can enter their symptoms or required specialization (e.g., cardiology, surgery), and the system will find the nearest available appointment date with a doctor of the specified specialization. The system considers doctor availability, patient load, and appointment duration.
 
@@ -9,6 +9,32 @@ This project is a hospital appointment scheduling system. Patients can enter the
 -   Programming language: JavaScript (Node.js)
 -   Database: PostgreSQL
 -   Docker for containerization
+
+## Install
+
+```bash
+git clone <repository-url>
+cd hospital-appointment-scheduler
+npm install
+```
+
+## Run
+**`Migration`**
+```bash
+npm run migrate
+```
+**`Seeder`**
+```bash
+npm run seed
+```
+**`Development`**
+```bash
+npm run dev
+```
+**`Production`**
+```bash
+npm start
+```
 
 ## Base URL
 
@@ -915,17 +941,3 @@ curl -X 'POST' \
     No Content
     ```
 
-## Install
-
-```bash
-git clone <repository-url>
-cd hospital-appointment-scheduler
-npm install
-```
-
-## Run
-
-```bash
-docker-compose up
-npm start
-```

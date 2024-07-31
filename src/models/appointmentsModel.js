@@ -6,7 +6,6 @@ export async function createAppointment({
 	start_date,
 	end_date,
 }) {
-	console.log(123, patient_id, doctor_id, start_date, end_date);
 	const res = await pool.query(
 		'INSERT INTO appointments (patient_id, doctor_id, start_date, end_date) VALUES ($1, $2, $3, $4) RETURNING *',
 		[patient_id, doctor_id, start_date, end_date],
