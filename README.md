@@ -329,11 +329,10 @@ curl -X 'POST' \
     'api/v1/appointments' \
     -H 'Content-Type: application/json' \
     -d '{
-      "patient_id": 1,
-      "doctor_id": 2,
-      "star_date": "2024-07-10T10:00:00Z",
-      "end_date": "2024-07-10T10:20:00Z"
-
+        "patient_id": 1,
+        "doctor_id": 2,
+        "start_date": "2024-07-10T10:00:00Z",
+        "end_date": "2024-07-10T10:20:00Z"
     }'
     ```
 

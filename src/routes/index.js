@@ -6,6 +6,7 @@ import specializationRoutes from './specializationRoutes.js';
 import symptomRoutes from './symptomRoutes.js';
 import specializationSymptomRoutes from './specializationSymptomRoutes.js';
 import availabilityRoutes from './availabilityRoutes.js';
+import appointmentsRoutes from './appointmentsRoutes.js';
 
 import { authenticateToken } from '../middleware/authMiddleware.js';
 
@@ -18,7 +19,12 @@ router.use('/api/v1/patients', authenticateToken, patientRoutes);
 router.use('/api/v1/doctors', authenticateToken, doctorRoutes);
 router.use('/api/v1/specializations', authenticateToken, specializationRoutes);
 router.use('/api/v1/symptoms', authenticateToken, symptomRoutes);
-router.use('/api/v1/specialization_symptoms', authenticateToken, specializationSymptomRoutes);
+router.use(
+	'/api/v1/specialization_symptoms',
+	authenticateToken,
+	specializationSymptomRoutes,
+);
 router.use('/api/v1/availability', authenticateToken, availabilityRoutes);
+router.use('/api/v1/appointments', authenticateToken, appointmentsRoutes);
 
 export default router;
