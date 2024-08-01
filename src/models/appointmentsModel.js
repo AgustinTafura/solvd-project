@@ -77,6 +77,7 @@ export async function findNearestAppointments(
 ) {
 	let specializationIds = [];
 	const appointmentsLimit = limit && limit > 0 ? limit : 1;
+
 	if (specialization_id) {
 		specializationIds.push(Number(specialization_id));
 	} else if (symptomsArray && symptomsArray.length > 0) {
@@ -84,14 +85,14 @@ export async function findNearestAppointments(
 	}
 
 	if (specializationIds.length === 0) {
-		throw new Error('No specialition finded');
+		throw new Error('No specialization found');
 	}
 
 	const doctorQuery = `
-            SELECT id
-            FROM doctors
-            WHERE specialization_id = ANY($1::int[])
-        `;
+        SELECT id
+        FROM doctors
+        WHERE specialization_id = ANY($1::int[])
+    `;
 	const doctorResult = await pool.query(doctorQuery, [specializationIds]);
 	const doctorIds = doctorResult.rows.map((row) => row.id);
 
@@ -104,95 +105,80 @@ export async function findNearestAppointments(
 	const todayDayOfWeek = now.getDay();
 
 	const availabilityQuery = `
-            SELECT a.doctor_id, a.day_of_week, a.start_time, a.end_time, d.specialization_id
-            FROM availability a
-            JOIN doctors d ON a.doctor_id = d.id
-            WHERE a.doctor_id = ANY($1::int[])
-        `;
+        SELECT a.doctor_id, a.day_of_week, a.start_time, a.end_time, d.specialization_id
+        FROM availability a
+        JOIN doctors d ON a.doctor_id = d.id
+        WHERE a.doctor_id = ANY($1::int[])
+    `;
 	const availabilityResult = await pool.query(availabilityQuery, [doctorIds]);
 	const availabilities = availabilityResult.rows;
 
 	const appointmentQuery = `
-            SELECT doctor_id, start_date, end_date
-            FROM appointments
-            WHERE doctor_id = ANY($1::int[])
-        `;
+        SELECT doctor_id, start_date, end_date
+        FROM appointments
+        WHERE doctor_id = ANY($1::int[])
+    `;
 	const appointmentResult = await pool.query(appointmentQuery, [doctorIds]);
 	const appointments = appointmentResult.rows;
 
 	const thirtyMinutes = 30 * 60 * 1000;
 	const availableSlots = [];
-	let weeksSearched = 0;
+	let daysSearched = 0;
 
-	while (availableSlots.length < appointmentsLimit && weeksSearched < 4) {
-		// Limit the search to 4 weeks
-		for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
-			const currentDayOfWeek = (todayDayOfWeek + dayOffset) % 7;
-			const todaysAvailabilities = availabilities.filter(
-				(availability) => availability.day_of_week === currentDayOfWeek,
-			);
+	while (availableSlots.length < appointmentsLimit && daysSearched < 28) {
+		// Limit the search to 4 weeks (28 days)
+		const currentDayOfWeek = (todayDayOfWeek + daysSearched) % 7;
+		const todaysAvailabilities = availabilities.filter(
+			(availability) => availability.day_of_week === currentDayOfWeek,
+		);
 
-			for (const availability of todaysAvailabilities) {
-				const { doctor_id, start_time, end_time, specialization_id } =
-					availability;
-				let currentTime = new Date(
-					`${now.toDateString()} ${start_time}`,
+		for (const availability of todaysAvailabilities) {
+			const { doctor_id, start_time, end_time, specialization_id } =
+				availability;
+			let currentTime = new Date(`${now.toDateString()} ${start_time}`);
+			const endTimeDate = new Date(`${now.toDateString()} ${end_time}`);
+
+			// Set currentTime for the first search day
+			if (daysSearched === 0 && currentTime < roundedNow) {
+				currentTime = roundedNow;
+			}
+
+			// Adjust currentTime for future days
+			currentTime.setDate(currentTime.getDate() + daysSearched);
+			const futureEndTimeDate = new Date(endTimeDate);
+			futureEndTimeDate.setDate(endTimeDate.getDate() + daysSearched);
+
+			while (currentTime <= futureEndTimeDate) {
+				const currentTimeEnd = new Date(
+					currentTime.getTime() + thirtyMinutes,
 				);
-				const endTimeDate = new Date(
-					`${now.toDateString()} ${end_time}`,
+				const overlappingAppointment = appointments.some(
+					(app) =>
+						app.doctor_id === doctor_id &&
+						new Date(app.start_date) < currentTimeEnd &&
+						new Date(app.end_date) > currentTime,
 				);
 
-				// Set currentTime for the first search day
-				if (
-					weeksSearched === 0 &&
-					dayOffset === 0 &&
-					currentTime < roundedNow
-				) {
-					currentTime = roundedNow;
-				}
+				if (!overlappingAppointment) {
+					availableSlots.push({
+						doctor_id,
+						specialization_id,
+						start_date: currentTime.toISOString(),
+						end_date: currentTimeEnd.toISOString(),
+					});
 
-				// Adjust currentTime for future weeks
-				currentTime.setDate(currentTime.getDate() + weeksSearched * 7);
-				const futureEndTimeDate = new Date(endTimeDate);
-				futureEndTimeDate.setDate(
-					endTimeDate.getDate() + weeksSearched * 7,
-				);
-
-				while (currentTime <= futureEndTimeDate) {
-					const currentTimeEnd = new Date(
-						currentTime.getTime() + thirtyMinutes,
-					);
-					const overlappingAppointment = appointments.some(
-						(app) =>
-							app.doctor_id === doctor_id &&
-							new Date(app.start_date) < currentTimeEnd &&
-							new Date(app.end_date) > currentTime,
-					);
-
-					if (!overlappingAppointment) {
-						availableSlots.push({
-							doctor_id,
-							specialization_id,
-							start_date: currentTime.toISOString(),
-							end_date: currentTimeEnd.toISOString(),
-						});
-
-						if (availableSlots.length >= appointmentsLimit) {
-							return availableSlots.sort(
-								(a, b) =>
-									new Date(a.start_date) -
-									new Date(b.start_date),
-							);
-						}
+					if (availableSlots.length >= appointmentsLimit) {
+						return availableSlots.sort(
+							(a, b) =>
+								new Date(a.start_date) - new Date(b.start_date),
+						);
 					}
-
-					currentTime = new Date(
-						currentTime.getTime() + thirtyMinutes,
-					);
 				}
+
+				currentTime = new Date(currentTime.getTime() + thirtyMinutes);
 			}
 		}
-		weeksSearched++;
+		daysSearched++;
 	}
 
 	return availableSlots.sort(
