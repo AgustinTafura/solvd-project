@@ -4,6 +4,7 @@ import {
 	getAppointmentById,
 	updateAppointment,
 	deleteAppointment,
+	findNearestAppointments,
 } from '../models/appointmentsModel.js';
 
 export async function createAppointmentHandler(req, res) {
@@ -75,5 +76,28 @@ export async function deleteAppointmentHandler(req, res) {
 		}
 	} catch (error) {
 		res.status(500).json({ error: 'Error deleting appointment' });
+	}
+}
+
+export async function findNearestAppointmentsHandler(req, res) {
+	const { specialization_id, symptoms, limit } = req.query;
+	const symptomsArray = symptoms ? symptoms.split(',').map(Number) : [];
+
+	try {
+		const appointment = await findNearestAppointments(
+			specialization_id,
+			symptomsArray,
+			limit
+		);
+
+		if (appointment) {
+			res.status(200).json(appointment);
+		} else {
+			res.status(404).json({ error: 'No available appointments found' });
+		}
+	} catch (error) {
+		res.status(500).json({
+			error: 'Error finding the nearest appointment',
+		});
 	}
 }

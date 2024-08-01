@@ -5,11 +5,13 @@ import {
 	getAppointmentByIdHandler,
 	updateAppointmentHandler,
 	deleteAppointmentHandler,
+	findNearestAppointmentsHandler,
 } from '../controllers/appointmentsController.js';
 
 const router = express.Router();
 
 router.post('/', createAppointmentHandler);
+router.get('/find', findNearestAppointmentsHandler);
 router.get('/', getAllAppointmentsHandler);
 router.get('/:id', getAppointmentByIdHandler);
 router.put('/:id', updateAppointmentHandler);
