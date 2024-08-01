@@ -161,6 +161,130 @@ const patients = [
 	},
 ];
 
+const appointments = [
+	{
+		patient_id: 1,
+		doctor_id: 1,
+		start_date: '2024-07-28T09:00:00Z',
+		end_date: '2024-07-28T09:30:00Z',
+	},
+	{
+		patient_id: 2,
+		doctor_id: 1,
+		start_date: '2024-07-30T13:00:00Z',
+		end_date: '2024-07-30T13:30:00Z',
+	},
+	{
+		patient_id: 3,
+		doctor_id: 2,
+		start_date: '2024-07-29T08:00:00Z',
+		end_date: '2024-07-29T08:30:00Z',
+	},
+	{
+		patient_id: 4,
+		doctor_id: 2,
+		start_date: '2024-07-31T14:00:00Z',
+		end_date: '2024-07-31T14:30:00Z',
+	},
+	{
+		patient_id: 5,
+		doctor_id: 3,
+		start_date: '2024-08-02T10:00:00Z',
+		end_date: '2024-08-02T10:30:00Z',
+	},
+	{
+		patient_id: 6,
+		doctor_id: 3,
+		start_date: '2024-08-03T09:00:00Z',
+		end_date: '2024-08-03T09:30:00Z',
+	},
+	{
+		patient_id: 7,
+		doctor_id: 4,
+		start_date: '2024-07-28T12:00:00Z',
+		end_date: '2024-07-28T12:30:00Z',
+	},
+	{
+		patient_id: 8,
+		doctor_id: 4,
+		start_date: '2024-07-30T11:00:00Z',
+		end_date: '2024-07-30T11:30:00Z',
+	},
+	{
+		patient_id: 9,
+		doctor_id: 5,
+		start_date: '2024-07-29T08:00:00Z',
+		end_date: '2024-07-29T08:30:00Z',
+	},
+	{
+		patient_id: 10,
+		doctor_id: 5,
+		start_date: '2024-07-31T13:00:00Z',
+		end_date: '2024-07-31T13:30:00Z',
+	},
+	// (40 more appointment objects...)
+	{
+		patient_id: 1,
+		doctor_id: 1,
+		start_date: '2024-08-15T09:00:00Z',
+		end_date: '2024-08-15T09:30:00Z',
+	},
+	{
+		patient_id: 2,
+		doctor_id: 1,
+		start_date: '2024-08-17T13:00:00Z',
+		end_date: '2024-08-17T13:30:00Z',
+	},
+	{
+		patient_id: 3,
+		doctor_id: 2,
+		start_date: '2024-08-18T08:00:00Z',
+		end_date: '2024-08-18T08:30:00Z',
+	},
+	{
+		patient_id: 4,
+		doctor_id: 2,
+		start_date: '2024-08-19T14:00:00Z',
+		end_date: '2024-08-19T14:30:00Z',
+	},
+	{
+		patient_id: 5,
+		doctor_id: 3,
+		start_date: '2024-08-21T10:00:00Z',
+		end_date: '2024-08-21T10:30:00Z',
+	},
+	{
+		patient_id: 6,
+		doctor_id: 3,
+		start_date: '2024-08-22T09:00:00Z',
+		end_date: '2024-08-22T09:30:00Z',
+	},
+	{
+		patient_id: 7,
+		doctor_id: 4,
+		start_date: '2024-08-23T12:00:00Z',
+		end_date: '2024-08-23T12:30:00Z',
+	},
+	{
+		patient_id: 8,
+		doctor_id: 4,
+		start_date: '2024-08-25T11:00:00Z',
+		end_date: '2024-08-25T11:30:00Z',
+	},
+	{
+		patient_id: 9,
+		doctor_id: 5,
+		start_date: '2024-08-26T08:00:00Z',
+		end_date: '2024-08-26T08:30:00Z',
+	},
+	{
+		patient_id: 10,
+		doctor_id: 5,
+		start_date: '2024-08-28T13:00:00Z',
+		end_date: '2024-08-28T13:30:00Z',
+	},
+];
+
 async function seedSpecializations() {
 	for (const specialization of specializations) {
 		await pool.query(
@@ -244,6 +368,21 @@ async function seedPatients() {
 	console.log('Patients seeded');
 }
 
+async function seedAppointments() {
+	for (const appointment of appointments) {
+		await pool.query(
+			'INSERT INTO appointments (patient_id, doctor_id, start_date, end_date) VALUES ($1, $2, $3, $4)',
+			[
+				appointment.patient_id,
+				appointment.doctor_id,
+				appointment.start_date,
+				appointment.end_date,
+			],
+		);
+	}
+	console.log('Appointments seeded');
+}
+
 async function seedDatabase() {
 	try {
 		await seedSpecializations();
@@ -252,6 +391,7 @@ async function seedDatabase() {
 		await seedPatients();
 		await seedDoctors();
 		await seedAvailability();
+		await seedAppointments();
 		console.log('Database seeded successfully');
 	} catch (err) {
 		console.error('Error seeding database', err);

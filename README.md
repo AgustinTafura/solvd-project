@@ -416,8 +416,6 @@ curl -X 'POST' \
 -   **GET `api/v1/appointments/find`** - Find the nearest available appointment  
      Server responds with status code 200 and the nearest available appointment.
 
-
-
     **Request:**
 
     ```bash
@@ -432,9 +430,10 @@ curl -X 'POST' \
     ```
 
     **Request Body:**
+
     -   "specialization_id" (optional): ID of the specialization to search for.
     -   "symptomsArray" (optional): Array of symptom IDs to search for.
-    -    "limit" (optional): Maximum number of appointments to return. Defaults to 10 if not provided.
+    -   "limit" (optional): Maximum number of appointments to return. Defaults to 10 if not provided.
 
     **Response body:**
 
@@ -457,13 +456,13 @@ curl -X 'POST' \
     ```
 
     **Request Body:**
-    
+
     -   The search will start from the current date and time, rounded to the next half-hour (e.g., if the current time is 11:43, the search will start from 12:00).
     -   If "specialization_id" is provided, the search will be based on the specialization.
     -   If "symptomsArray" is provided and "specialization_id" is not, the search will use the symptoms to find the relevant specializations.
     -   If both "specialization_id" and "symptomsArray" are provided, the search will prioritize "specialization_id".
     -   The search will cover the next 4 weeks if necessary to meet the specified limit.
-    - Parameter "limit" is 1 by defaul
+    -   Parameter "limit" is 1 by defaul
 
 -   **GET `api/v1/appointments/{appointment_id}`** - Get an appointment by ID  
      Server responds with status code 200 and the appointment record if it exists.

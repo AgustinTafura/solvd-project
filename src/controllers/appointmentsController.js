@@ -87,7 +87,7 @@ export async function findNearestAppointmentsHandler(req, res) {
 		const appointment = await findNearestAppointments(
 			specialization_id,
 			symptomsArray,
-			limit
+			limit,
 		);
 
 		if (appointment) {
