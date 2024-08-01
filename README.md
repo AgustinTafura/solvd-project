@@ -1,6 +1,6 @@
 # Hospital Appointment Scheduler
 
-##  Project Description
+## Project Description
 
 This project is a hospital appointment scheduling system. Patients can enter their symptoms or required specialization (e.g., cardiology, surgery), and the system will find the nearest available appointment date with a doctor of the specified specialization. The system considers doctor availability, patient load, and appointment duration.
 
@@ -19,19 +19,27 @@ npm install
 ```
 
 ## Run
+
 **`Migration`**
+
 ```bash
 npm run migrate
 ```
+
 **`Seeder`**
+
 ```bash
 npm run seed
 ```
+
 **`Development`**
+
 ```bash
 npm run dev
 ```
+
 **`Production`**
+
 ```bash
 npm start
 ```
@@ -404,6 +412,58 @@ curl -X 'POST' \
     	}
     ]
     ```
+
+-   **GET `api/v1/appointments/find`** - Find the nearest available appointment  
+     Server responds with status code 200 and the nearest available appointment.
+
+
+
+    **Request:**
+
+    ```bash
+        curl -X 'POST' 'api/v1/appointments/nearest' \
+        -H 'Authorization: Bearer <your-token>' \
+        -H 'Content-Type: application/json' \
+        -d '{
+            "specialization_id": 1,
+            "symptomsArray": [1, 2, 3],
+            "limit": 10
+        }'
+    ```
+
+    **Request Body:**
+    -   "specialization_id" (optional): ID of the specialization to search for.
+    -   "symptomsArray" (optional): Array of symptom IDs to search for.
+    -    "limit" (optional): Maximum number of appointments to return. Defaults to 10 if not provided.
+
+    **Response body:**
+
+    ```json
+    [
+        {
+            "doctor_id": 2,
+            "specialization_id": 1,
+            "start_date": "2024-07-31T12:00:00Z",
+            "end_date": "2024-07-31T12:30:00Z"
+        },
+        {
+            "doctor_id": 3,
+            "specialization_id": 1,
+            "start_date": "2024-07-31T12:30:00Z",
+            "end_date": "2024-07-31T13:00:00Z"
+        },
+        ...
+        ]
+    ```
+
+    **Request Body:**
+    
+    -   The search will start from the current date and time, rounded to the next half-hour (e.g., if the current time is 11:43, the search will start from 12:00).
+    -   If "specialization_id" is provided, the search will be based on the specialization.
+    -   If "symptomsArray" is provided and "specialization_id" is not, the search will use the symptoms to find the relevant specializations.
+    -   If both "specialization_id" and "symptomsArray" are provided, the search will prioritize "specialization_id".
+    -   The search will cover the next 4 weeks if necessary to meet the specified limit.
+    - Parameter "limit" is 1 by defaul
 
 -   **GET `api/v1/appointments/{appointment_id}`** - Get an appointment by ID  
      Server responds with status code 200 and the appointment record if it exists.
@@ -940,4 +1000,3 @@ curl -X 'POST' \
     ```
     No Content
     ```
-

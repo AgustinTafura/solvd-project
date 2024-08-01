@@ -133,7 +133,7 @@ export async function findNearestAppointments(
 		let weeksSearched = 0;
 
 		while (availableSlots.length < appointmentsLimit && weeksSearched < 4) {
-			// Limitar la búsqueda a 4 semanas
+			// Limit the search to 4 weeks
 			for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
 				const currentDayOfWeek = (todayDayOfWeek + dayOffset) % 7;
 				const todaysAvailabilities = availabilities.filter(
@@ -155,7 +155,7 @@ export async function findNearestAppointments(
 						`${now.toDateString()} ${end_time}`,
 					);
 
-					// Ajustar currentTime para el primer día de búsqueda
+					// Set currentTime for the first search day
 					if (
 						weeksSearched === 0 &&
 						dayOffset === 0 &&
@@ -164,7 +164,7 @@ export async function findNearestAppointments(
 						currentTime = roundedNow;
 					}
 
-					// Ajustar currentTime para semanas futuras
+					// Adjust currentTime for future weeks
 					currentTime.setDate(
 						currentTime.getDate() + weeksSearched * 7,
 					);
