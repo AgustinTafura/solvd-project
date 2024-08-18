@@ -1,12 +1,15 @@
 import { pool } from '../db.js';
 
 export async function getAllPatients() {
-	const res = await pool.query('SELECT * FROM patients');
+	const res = await pool.query('SELECT id, name, email, phone FROM patients');
 	return res.rows;
 }
 
 export async function getPatientById(id) {
-	const res = await pool.query('SELECT * FROM patients WHERE id = $1', [id]);
+	const res = await pool.query(
+		'SELECT id, name, email, phone FROM patients WHERE id = $1',
+		[id],
+	);
 	return res.rows[0];
 }
 

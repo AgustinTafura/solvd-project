@@ -1,12 +1,15 @@
 import { pool } from '../db.js';
 
 export async function getAllSymptoms() {
-	const res = await pool.query('SELECT * FROM symptoms');
+	const res = await pool.query('SELECT id, name FROM symptoms');
 	return res.rows;
 }
 
 export async function getSymptomById(id) {
-	const res = await pool.query('SELECT * FROM symptoms WHERE id = $1', [id]);
+	const res = await pool.query(
+		'SELECT id, name FROM symptoms WHERE id = $1',
+		[id],
+	);
 	return res.rows[0];
 }
 

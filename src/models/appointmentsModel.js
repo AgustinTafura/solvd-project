@@ -14,14 +14,17 @@ export async function createAppointment({
 }
 
 export async function getAllAppointments() {
-	const res = await pool.query('SELECT * FROM appointments');
+	const res = await pool.query(
+		'SELECT id,patient_id,doctor_id,start_date,end_date FROM appointments',
+	);
 	return res.rows;
 }
 
 export async function getAppointmentById(id) {
-	const res = await pool.query('SELECT * FROM appointments WHERE id = $1', [
-		id,
-	]);
+	const res = await pool.query(
+		'SELECT id,patient_id,doctor_id,start_date,end_date FROM appointments WHERE id = $1',
+		[id],
+	);
 	return res.rows[0];
 }
 

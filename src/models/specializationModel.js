@@ -1,13 +1,13 @@
 import { pool } from '../db.js';
 
 export async function getAllSpecializations() {
-	const res = await pool.query('SELECT * FROM specializations');
+	const res = await pool.query('SELECT id, name FROM specializations');
 	return res.rows;
 }
 
 export async function getSpecializationById(id) {
 	const res = await pool.query(
-		'SELECT * FROM specializations WHERE id = $1',
+		'SELECT id, name FROM specializations WHERE id = $1',
 		[id],
 	);
 	return res.rows[0];

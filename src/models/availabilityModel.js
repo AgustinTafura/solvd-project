@@ -14,14 +14,17 @@ export async function createAvailability(
 }
 
 export async function getAllAvailability() {
-	const res = await pool.query('SELECT * FROM availability');
+	const res = await pool.query(
+		'SELECT id,doctor_id,day_of_week,start_time,end_time FROM availability',
+	);
 	return res.rows;
 }
 
 export async function getAvailabilityById(id) {
-	const res = await pool.query('SELECT * FROM availability WHERE id = $1', [
-		id,
-	]);
+	const res = await pool.query(
+		'SELECT id,doctor_id,day_of_week,start_time,end_time FROM availability WHERE id = $1',
+		[id],
+	);
 	return res.rows[0];
 }
 
