@@ -15,7 +15,10 @@ const pool = new Pool({
 	port: process.env.DB_PORT || 5432,
 });
 
-const dbName = process.env.DB_NAME;
+const dbName =
+	process.env.NODE_ENV === 'test'
+		? process.env.DB_NAME_TEST
+		: process.env.DB_NAME;
 const schemaPath = path.join(process.cwd(), 'hospital_appointment_schema.sql');
 const schemaSQL = fs.readFileSync(schemaPath, 'utf-8');
 
