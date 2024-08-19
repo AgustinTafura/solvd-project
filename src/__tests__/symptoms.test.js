@@ -3,13 +3,13 @@ import app from '../index.js';
 import { pool } from '../db.js';
 import getToken from '../utils/getToken.js';
 
-describe('Availability Endpoints', () => {
-	let availabilityId;
+describe('Symptoms Endpoints', () => {
+	let symptomId;
 	let token;
 
 	beforeAll(async () => {
 		token = await getToken();
-		await pool.query('DELETE FROM availability');
+		// await pool.query('DELETE FROM symptoms');
 	});
 
 	afterAll(async () => {
@@ -17,60 +17,54 @@ describe('Availability Endpoints', () => {
 	});
 
 	// POST - Create
-	it('should create a new availability', async () => {
+	it('should create a new symptom', async () => {
 		const res = await request(app)
-			.post('/api/v1/availability')
+			.post('/api/v1/symptoms')
 			.set('Authorization', `Bearer ${token}`)
 			.send({
-				doctor_id: 1,
-				day_of_week: 1,
-				start_time: '09:00:00',
-				end_time: '17:00:00',
+				name: 'Migraine sever',
 			});
-		console.log(7777777777777777, 'availability: POST - ', res.body);
+
 		expect(res.statusCode).toEqual(201);
 		expect(res.body).toHaveProperty('id');
-		availabilityId = res.body.id;
+		symptomId = res.body.id; // Save the ID for use in other tests.
 	});
 
 	// GET - Get All
-	it('should fetch all availability records', async () => {
+	it('should fetch all symptoms', async () => {
 		const res = await request(app)
-			.get('/api/v1/availability')
+			.get('/api/v1/symptoms')
 			.set('Authorization', `Bearer ${token}`);
 		expect(res.statusCode).toEqual(200);
 		expect(res.body.length).toBeGreaterThan(0);
 	});
 
 	// GET - Get by ID
-	it('should fetch a single availability by ID', async () => {
+	it('should fetch a single symptom by ID', async () => {
 		const res = await request(app)
-			.get(`/api/v1/availability/${availabilityId}`)
+			.get(`/api/v1/symptoms/${symptomId}`)
 			.set('Authorization', `Bearer ${token}`);
 		expect(res.statusCode).toEqual(200);
-		expect(res.body).toHaveProperty('id', availabilityId);
+		expect(res.body).toHaveProperty('id', symptomId);
 	});
 
 	// PUT - Update by ID
-	it('should update an availability record', async () => {
+	it('should update a symptom', async () => {
 		const res = await request(app)
-			.put(`/api/v1/availability/${availabilityId}`)
+			.put(`/api/v1/symptoms/${symptomId}`)
 			.set('Authorization', `Bearer ${token}`)
 			.send({
-				doctor_id: 1,
-				day_of_week: 2,
-				start_time: '10:00:00',
-				end_time: '18:00:00',
+				name: 'Migraine',
 			});
 
 		expect(res.statusCode).toEqual(200);
-		expect(res.body).toHaveProperty('day_of_week', 2);
+		expect(res.body).toHaveProperty('name', 'Migraine');
 	});
 
 	// DELETE - Delete by ID
-	it('should delete an availability record', async () => {
+	it('should delete a symptom', async () => {
 		const res = await request(app)
-			.delete(`/api/v1/availability/${availabilityId}`)
+			.delete(`/api/v1/symptoms/${symptomId}`)
 			.set('Authorization', `Bearer ${token}`);
 		expect(res.statusCode).toEqual(204);
 	});
