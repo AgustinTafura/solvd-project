@@ -62,7 +62,6 @@ describe('Appointments Endpoints', () => {
 				start_date: '2024-08-04T16:00:00.000Z',
 				end_date: '2024-08-04T16:15:00.000Z',
 			});
-		console.log(123, res.body);
 
 		expect(res.statusCode).toEqual(200);
 		expect(res.body).toHaveProperty(

@@ -44,6 +44,13 @@ npm run dev
 npm start
 ```
 
+**`Testing`**
+
+```bash
+npm run test
+```
+
+
 ## Base URL
 
 http://localhost:3000
