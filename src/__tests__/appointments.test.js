@@ -77,4 +77,47 @@ describe('Appointments Endpoints', () => {
 			.set('Authorization', `Bearer ${token}`);
 		expect(res.statusCode).toEqual(204);
 	});
+
+	// Prueba de creación con datos faltantes
+	it('should return a 400 error when creating an appointment with missing fields', async () => {
+		const res = await request(app)
+			.post('/api/v1/appointments')
+			.set('Authorization', `Bearer ${token}`)
+			.send({
+				doctor_id: 1,
+				start_date: '2024-08-04T12:00:00.000Z', // falta patient_id y end_date
+			});
+		console.log(11, res.body, res.statusCode);
+
+		expect(res.statusCode).toEqual(400);
+		expect(res.body).toHaveProperty('error');
+	});
+
+	// Prueba de conflicto de citas
+	it('should return a 409 error when creating an appointment with a conflicting time slot', async () => {
+		// Crea una cita válida primero
+		await request(app)
+			.post('/api/v1/appointments')
+			.set('Authorization', `Bearer ${token}`)
+			.send({
+				patient_id: 1,
+				doctor_id: 1,
+				start_date: '2024-08-04T12:00:00.000Z',
+				end_date: '2024-08-04T12:15:00.000Z',
+			});
+
+		// Intenta crear otra cita que solape con la anterior
+		const res = await request(app)
+			.post('/api/v1/appointments')
+			.set('Authorization', `Bearer ${token}`)
+			.send({
+				patient_id: 1,
+				doctor_id: 1,
+				start_date: '2024-08-04T12:10:00.000Z', // se solapa con la cita anterior
+				end_date: '2024-08-04T12:20:00.000Z',
+			});
+		console.log(44, res.body, res.statusCode);
+		expect(res.statusCode).toEqual(409); // o el código que uses para conflictos
+		expect(res.body).toHaveProperty('error');
+	});
 });
