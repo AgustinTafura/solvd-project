@@ -35,7 +35,14 @@ const createDatabaseAndSchema = async () => {
 			await client.query(`CREATE DATABASE ${dbName}`);
 			console.log(`Database ${dbName} created successfully.`);
 		} else {
-			console.log(`Database ${dbName} already exists.`);
+			if (process.env.NODE_ENV === 'test') {
+				await client.query(`DROP DATABASE ${dbName}`);
+				console.log(`Database ${dbName} dropped successfully.`);
+				await client.query(`CREATE DATABASE ${dbName}`);
+				console.log(`Database ${dbName} re-created successfully.`);
+			} else {
+				console.log(`Database ${dbName} already exists.`);
+			}
 		}
 
 		client.release();

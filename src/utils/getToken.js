@@ -6,8 +6,7 @@ let token;
 
 const getToken = async () => {
 	if (!token) {
-		await pool.query('DELETE FROM users');
-
+		// await pool.query('DELETE FROM users');
 		await request(app).post('/api/v1/register').send({
 			name: 'user 1',
 			email: 'email1@mail.com',
@@ -18,10 +17,8 @@ const getToken = async () => {
 			email: 'email1@mail.com',
 			password: '123123',
 		});
-
 		token = loginResponse.body.token;
 	}
-
 	return token;
 };
 
