@@ -9,7 +9,7 @@ describe('Availability Endpoints', () => {
 
 	beforeAll(async () => {
 		token = await getToken();
-		await pool.query('DELETE FROM availability');
+		// await pool.query('DELETE FROM availability');
 	});
 
 	afterAll(async () => {
