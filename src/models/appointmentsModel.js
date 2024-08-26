@@ -188,3 +188,19 @@ export async function findNearestAppointments(
 		(a, b) => new Date(a.start_date) - new Date(b.start_date),
 	);
 }
+
+export async function isTimeSlotAvailable(doctor_id, start_date, end_date) {
+	const query = `
+		SELECT COUNT(*) as count
+		FROM appointments
+		WHERE doctor_id = $1
+		AND ($2 < end_date AND $3 > start_date)
+	`;
+
+	const values = [doctor_id, start_date, end_date];
+
+	const result = await pool.query(query, values);
+
+	// Si la consulta devuelve 0, significa que no hay superposición
+	return result.rows[0].count == 0;
+}

@@ -5,11 +5,25 @@ import {
 	updateAppointment,
 	deleteAppointment,
 	findNearestAppointments,
+	isTimeSlotAvailable,
 } from '../models/appointmentsModel.js';
 
 export async function createAppointmentHandler(req, res) {
 	const { patient_id, doctor_id, start_date, end_date } = req.body;
+	if (!patient_id || !doctor_id || !start_date || !end_date) {
+		return res.status(400).json({ error: 'Missing required parameters' });
+	}
 	try {
+		const available = await isTimeSlotAvailable(
+			doctor_id,
+			start_date,
+			end_date,
+		);
+		if (!available) {
+			return res
+				.status(409)
+				.json({ error: 'Time slot is not available for this doctor' });
+		}
 		const newAppointment = await createAppointment({
 			patient_id,
 			doctor_id,
@@ -48,7 +62,20 @@ export async function getAppointmentByIdHandler(req, res) {
 export async function updateAppointmentHandler(req, res) {
 	const { id } = req.params;
 	const { patient_id, doctor_id, start_date, end_date } = req.body;
+	if (!patient_id || !doctor_id || !start_date || !end_date) {
+		return res.status(400).json({ error: 'Missing required parameters' });
+	}
 	try {
+		const available = await isTimeSlotAvailable(
+			doctor_id,
+			start_date,
+			end_date,
+		);
+		if (!available) {
+			return res
+				.status(409)
+				.json({ error: 'Time slot is not available for this doctor' });
+		}
 		const updatedAppointment = await updateAppointment(id, {
 			patient_id,
 			doctor_id,
@@ -82,7 +109,11 @@ export async function deleteAppointmentHandler(req, res) {
 export async function findNearestAppointmentsHandler(req, res) {
 	const { specialization_id, symptoms, limit } = req.query;
 	const symptomsArray = symptoms ? symptoms.split(',').map(Number) : [];
-
+	if (!specialization_id && !symptoms) {
+		return res
+			.status(400)
+			.json({ error: 'Missing required specialization_id parameter' });
+	}
 	try {
 		const appointment = await findNearestAppointments(
 			specialization_id,
