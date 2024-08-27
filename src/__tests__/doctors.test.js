@@ -72,7 +72,7 @@ describe('Doctors Endpoints', () => {
 	});
 
 	// POST - Create
-	it('should return 400 when creating availability with missing fields', async () => {
+	it('should return 400 when creating doctor with missing fields', async () => {
 		const res = await request(app)
 			.post('/api/v1/doctors')
 			.set('Authorization', `Bearer ${token}`)

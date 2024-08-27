@@ -30,6 +30,11 @@ export async function getPatientByIdHandler(req, res) {
 export async function createPatientHandler(req, res) {
 	try {
 		const { name, email, phone } = req.body;
+		if (!name || !email || !phone) {
+			return res
+				.status(400)
+				.json({ error: 'Missing required parameters' });
+		}
 		const newPatient = await createPatient(name, email, phone);
 		res.status(201).json(newPatient);
 	} catch (error) {
