@@ -73,4 +73,18 @@ describe('Availability Endpoints', () => {
 			.set('Authorization', `Bearer ${token}`);
 		expect(res.statusCode).toEqual(204);
 	});
+
+	// POST - Create with missing fields
+	it('should return 400 when creating availability with missing fields', async () => {
+		const res = await request(app)
+			.post('/api/v1/availability')
+			.set('Authorization', `Bearer ${token}`)
+			.send({
+				// Missing doctor_id, end_time
+				day_of_week: 1,
+				start_time: '09:00:00',
+			});
+		expect(res.statusCode).toEqual(400);
+		expect(res.body).toHaveProperty('error', 'Missing required parameters');
+	});
 });

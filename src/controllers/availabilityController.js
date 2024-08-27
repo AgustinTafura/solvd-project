@@ -8,6 +8,9 @@ import {
 
 export async function createAvailabilityHandler(req, res) {
 	const { doctor_id, day_of_week, start_time, end_time } = req.body;
+	if (!day_of_week || !doctor_id || !start_time || !end_time) {
+		return res.status(400).json({ error: 'Missing required parameters' });
+	}
 	try {
 		const newAvailability = await createAvailability(
 			doctor_id,
@@ -47,7 +50,9 @@ export async function getAvailabilityByIdHandler(req, res) {
 export async function updateAvailabilityHandler(req, res) {
 	const { id } = req.params;
 	const { doctor_id, day_of_week, start_time, end_time } = req.body;
-
+	if (!day_of_week || !doctor_id || !start_time || !end_time) {
+		return res.status(400).json({ error: 'Missing required parameters' });
+	}
 	const updates = {};
 	if (doctor_id !== undefined) updates.doctor_id = doctor_id;
 	if (day_of_week !== undefined) updates.day_of_week = day_of_week;
