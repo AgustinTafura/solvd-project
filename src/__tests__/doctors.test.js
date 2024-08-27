@@ -70,4 +70,17 @@ describe('Doctors Endpoints', () => {
 			.set('Authorization', `Bearer ${token}`);
 		expect(res.statusCode).toEqual(204);
 	});
+
+	// POST - Create
+	it('should return 400 when creating availability with missing fields', async () => {
+		const res = await request(app)
+			.post('/api/v1/doctors')
+			.set('Authorization', `Bearer ${token}`)
+			.send({
+				name: 'Dr. Smith',
+				// Missing specialization_id: 1,
+			});
+		expect(res.statusCode).toEqual(400);
+		expect(res.body).toHaveProperty('error', 'Missing required parameters');
+	});
 });

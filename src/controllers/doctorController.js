@@ -31,6 +31,9 @@ export const getDoctorByIdHandler = async (req, res) => {
 
 export const createDoctorHandler = async (req, res) => {
 	const { name, specialization_id } = req.body;
+	if (!name || !specialization_id) {
+		return res.status(400).json({ error: 'Missing required parameters' });
+	}
 	try {
 		const newDoctor = await createDoctor(name, specialization_id);
 		res.status(201).json(newDoctor);
