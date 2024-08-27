@@ -33,7 +33,7 @@ describe('Patients Endpoints', () => {
 	});
 
 	// POST - Create with error
-	it('should create a new patient with duplicated email', async () => {
+	it('should return 400 when create a new patient with duplicated email', async () => {
 		const res = await request(app)
 			.post('/api/v1/patients')
 			.set('Authorization', `Bearer ${token}`)

@@ -30,6 +30,20 @@ describe('Specializations Endpoints', () => {
 		specializationId = res.body.id; // Save the ID for use in other tests.
 	});
 
+	// POST - Create with error
+	it('should return 400 when create a new specialization with duplicated name', async () => {
+		const res = await request(app)
+			.post('/api/v1/specializations')
+			.set('Authorization', `Bearer ${token}`)
+			.send({
+				name: 'Dentist',
+			});
+		console.log(res.body, res.statusCode);
+		expect(res.statusCode).toEqual(400);
+		expect(res.body).toHaveProperty('error');
+		expect(res.body.error).toContain('specializations_name_key');
+	});
+
 	// GET - Get All
 	it('should fetch all specializations', async () => {
 		const res = await request(app)
