@@ -514,7 +514,7 @@ async function seedSpecializationSymptoms() {
 async function seedAvailability() {
 	for (const availability of availabilities) {
 		await pool.query(
-			'INSERT INTO availability (doctor_id, day_of_week, start_time, end_time) VALUES ($1, $2, $3, $4)',
+			'INSERT INTO availability (doctor_id, day_of_week, start_time, end_time) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING',
 			[
 				availability.doctor_id,
 				availability.day_of_week,
@@ -529,7 +529,7 @@ async function seedAvailability() {
 async function seedDoctors() {
 	for (const doctor of doctors) {
 		await pool.query(
-			'INSERT INTO doctors (name, specialization_id) VALUES ($1, $2)',
+			'INSERT INTO doctors (name, specialization_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
 			[doctor.name, doctor.specialization_id],
 		);
 	}
@@ -540,7 +540,7 @@ async function seedPatients() {
 	for (const patient of patients) {
 		const { name, email, phone } = patient;
 		await pool.query(
-			'INSERT INTO patients (name, email, phone) VALUES ($1, $2, $3)',
+			'INSERT INTO patients (name, email, phone) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING',
 			[name, email, phone],
 		);
 	}
@@ -550,7 +550,7 @@ async function seedPatients() {
 async function seedAppointments() {
 	for (const appointment of appointments) {
 		await pool.query(
-			'INSERT INTO appointments (patient_id, doctor_id, start_date, end_date) VALUES ($1, $2, $3, $4)',
+			'INSERT INTO appointments (patient_id, doctor_id, start_date, end_date) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING',
 			[
 				appointment.patient_id,
 				appointment.doctor_id,

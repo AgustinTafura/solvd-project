@@ -7,6 +7,7 @@
 		"start": "node src/index.js",
 		"migrate": "node setupDb.js",
 		"seed": "node seedDb.js",
+		"docker-start": "npm run migrate && npm run seed && npm run start",
 		"dev": "concurrently \"npm run lint\" \"npm run format\" \"nodemon src/index.js\"",
 		"lint": "eslint . --ext .js,.jsx,.ts,.tsx",
 		"lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
