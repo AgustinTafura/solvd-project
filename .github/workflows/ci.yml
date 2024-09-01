@@ -19,6 +19,7 @@ jobs:
       DB_NAME: ${{ secrets.DB_NAME }}
       DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
       DB_PORT: ${{ secrets.DB_PORT }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
     steps:
       - name: Checkout code
