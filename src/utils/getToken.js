@@ -1,5 +1,6 @@
 import request from 'supertest';
 import app from '../index.js';
+// eslint-disable-next-line no-unused-vars
 import { pool } from '../db.js';
 
 let token;
