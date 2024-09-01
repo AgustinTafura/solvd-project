@@ -20,7 +20,9 @@ export async function createAvailabilityHandler(req, res) {
 		);
 		res.status(201).json(newAvailability);
 	} catch (error) {
-		res.status(500).json({ error: 'Error creating availability record' });
+		res.status(500).json({
+			error: `Error creating availability record - ${error}`,
+		});
 	}
 }
 
@@ -29,7 +31,9 @@ export async function getAllAvailabilityHandler(req, res) {
 		const availabilities = await getAllAvailability();
 		res.status(200).json(availabilities);
 	} catch (error) {
-		res.status(500).json({ error: 'Error fetching availability records' });
+		res.status(500).json({
+			error: `Error fetching availability record - ${error}`,
+		});
 	}
 }
 
@@ -43,7 +47,9 @@ export async function getAvailabilityByIdHandler(req, res) {
 			res.status(404).json({ error: 'Availability record not found' });
 		}
 	} catch (error) {
-		res.status(500).json({ error: 'Error fetching availability record' });
+		res.status(500).json({
+			error: `Error fetching availability record - ${error}`,
+		});
 	}
 }
 
@@ -67,7 +73,9 @@ export async function updateAvailabilityHandler(req, res) {
 			res.status(404).json({ error: 'Availability record not found' });
 		}
 	} catch (error) {
-		res.status(500).json({ error: 'Error updating availability record' });
+		res.status(500).json({
+			error: `Error updating availability record - ${error}`,
+		});
 	}
 }
 
@@ -77,6 +85,8 @@ export async function deleteAvailabilityHandler(req, res) {
 		await deleteAvailability(id);
 		res.status(204).send();
 	} catch (error) {
-		res.status(500).json({ error: 'Error deleting availability record' });
+		res.status(500).json({
+			error: `Error deleting availability record - ${error}`,
+		});
 	}
 }

@@ -32,7 +32,9 @@ export async function createAppointmentHandler(req, res) {
 		});
 		res.status(201).json(newAppointment);
 	} catch (error) {
-		res.status(500).json({ error: 'Error creating appointment' });
+		res.status(500).json({
+			error: `Error creating appointment - ${error}`,
+		});
 	}
 }
 
@@ -41,7 +43,9 @@ export async function getAllAppointmentsHandler(req, res) {
 		const appointments = await getAllAppointments();
 		res.status(200).json(appointments);
 	} catch (error) {
-		res.status(500).json({ error: 'Error fetching appointments' });
+		res.status(500).json({
+			error: `Error fetching appointment - ${error}`,
+		});
 	}
 }
 
@@ -55,7 +59,9 @@ export async function getAppointmentByIdHandler(req, res) {
 			res.status(404).json({ error: 'Appointment not found' });
 		}
 	} catch (error) {
-		res.status(500).json({ error: 'Error fetching appointment' });
+		res.status(500).json({
+			error: `Error fetching appointment - ${error}`,
+		});
 	}
 }
 
@@ -88,7 +94,9 @@ export async function updateAppointmentHandler(req, res) {
 			res.status(404).json({ error: 'Appointment not found' });
 		}
 	} catch (error) {
-		res.status(500).json({ error: 'Error updating appointment' });
+		res.status(500).json({
+			error: `Error updateing appointment - ${error}`,
+		});
 	}
 }
 
@@ -102,7 +110,9 @@ export async function deleteAppointmentHandler(req, res) {
 			res.status(404).json({ error: 'Appointment not found' });
 		}
 	} catch (error) {
-		res.status(500).json({ error: 'Error deleting appointment' });
+		res.status(500).json({
+			error: `Error deleting appointment - ${error}`,
+		});
 	}
 }
 
@@ -128,7 +138,7 @@ export async function findNearestAppointmentsHandler(req, res) {
 		}
 	} catch (error) {
 		res.status(500).json({
-			error: 'Error finding the nearest appointment',
+			error: `Error finding the nearest appointment - ${error}`,
 		});
 	}
 }
