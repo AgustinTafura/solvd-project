@@ -64,8 +64,8 @@ describe('Appointments Endpoints', () => {
 			});
 
 		expect(res.statusCode).toEqual(200);
-		expect(res.body).toHaveProperty(
-			'start_date',
+		expect(res.body).toHaveProperty('start_date');
+		expect(new Date(res.body.start_date).toISOString()).toEqual(
 			'2024-08-04T19:00:00.000Z',
 		);
 	});

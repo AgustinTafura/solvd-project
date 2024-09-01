@@ -18,10 +18,8 @@ const getToken = async () => {
 			email: 'testingemail@mail.com',
 			password: '123123test',
 		});
-		console.log(7777, loginResponse.body);
 		token = loginResponse.body.token;
 	}
-	console.log(888888, token);
 
 	return token;
 };
