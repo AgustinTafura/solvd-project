@@ -3,7 +3,7 @@ import { createJWT } from '../jwt.js';
 import { findUserByEmail, createUser } from '../models/userModel.js';
 
 const secret = process.env.JWT_SECRET;
-
+console.log(6666, 'secret:', secret);
 export async function register(req, res) {
 	const { email, name, password } = req.body;
 	const hashedPassword = await bcrypt.hash(password, 10);
