@@ -27,6 +27,7 @@ describe('Availability Endpoints', () => {
 				start_time: '09:00:00',
 				end_time: '17:00:00',
 			});
+		console.log(888888, token, res.body, res.statusCode);
 		expect(res.statusCode).toEqual(201);
 		expect(res.body).toHaveProperty('id');
 		availabilityId = res.body.id;
