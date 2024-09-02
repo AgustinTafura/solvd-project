@@ -1,4 +1,4 @@
-name: CI/CD No Docker with docker
+name: CI/CD with docker
 
 on:
   push:
